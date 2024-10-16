@@ -1,0 +1,11 @@
+-- Select all documents from the Employees table
+SELECT * FROM Employees;
+
+-- Select all documents from the Orders table
+SELECT * FROM Orders;
+
+-- Select only the FirstName and LastName from the Employees table
+SELECT FirstName, LastName FROM Employees;
+
+-- Select the OrderID and Amount from the Orders table
+SELECT OrderID, Amount FROM Orders;
