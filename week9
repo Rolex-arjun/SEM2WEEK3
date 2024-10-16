@@ -1,0 +1,11 @@
+-- Count the number of employees in the Employees table
+SELECT COUNT(*) AS EmployeeCount FROM Employees;
+
+-- Count the number of orders placed in the Orders table
+SELECT COUNT(*) AS OrderCount FROM Orders;
+
+-- Find the average Amount of all orders in the Orders table
+SELECT AVG(Amount) AS AverageAmount FROM Orders;
+
+-- Calculate the average age of employees (assuming there's a function to calculate age from DateOfBirth)
+SELECT AVG(YEAR(CURDATE()) - YEAR(DateOfBirth)) AS AverageAge FROM Employees;
