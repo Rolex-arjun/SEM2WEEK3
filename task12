@@ -1,0 +1,9 @@
+-- Inner Join: Join Employees and Orders on CustomerID (assuming employees are customers)
+SELECT E.FirstName, E.LastName, O.Amount
+FROM Employees E
+INNER JOIN Orders O ON E.EmployeeID = O.CustomerID;
+
+-- Left Join: Perform a left join between Employees and Orders
+SELECT E.FirstName, E.LastName, O.Amount
+FROM Employees E
+LEFT JOIN Orders O ON E.EmployeeID = O.CustomerID;
