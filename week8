@@ -1,0 +1,7 @@
+-- Select all employees and order the results by LastName in ascending order
+SELECT * FROM Employees
+ORDER BY LastName ASC;
+
+-- Select all orders and order the results by Amount in descending order
+SELECT * FROM Orders
+ORDER BY Amount DESC;
