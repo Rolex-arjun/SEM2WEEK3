@@ -1,0 +1,9 @@
+-- Update the Department of the employee with EmployeeID 1 to 'Finance'
+UPDATE Employees
+SET Department = 'Finance'
+WHERE EmployeeID = 1;
+
+-- Update the Amount in the Orders table where OrderID is 2 to 500.00
+UPDATE Orders
+SET Amount = 500.00
+WHERE OrderID = 2;
