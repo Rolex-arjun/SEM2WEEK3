@@ -1,0 +1,11 @@
+-- Find all departments that have more than 5 employees
+SELECT Department, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY Department
+HAVING COUNT(*) > 5;
+
+-- Find all CustomerIDs with total order Amount greater than 1000
+SELECT CustomerID, SUM(Amount) AS TotalAmount
+FROM Orders
+GROUP BY CustomerID
+HAVING SUM(Amount) > 1000;
