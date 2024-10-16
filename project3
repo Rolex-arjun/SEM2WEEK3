@@ -1,0 +1,128 @@
+-- Create Authors table
+CREATE TABLE Authors (
+    AuthorID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50)
+);
+
+-- Create Books table
+CREATE TABLE Books (
+    ISBN VARCHAR(13) PRIMARY KEY,
+    Title VARCHAR(100),
+    AuthorID INT,
+    Genre VARCHAR(50),
+    IsAvailable BOOLEAN,
+    PublicationYear INT,
+    FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+);
+
+-- Create Members table
+CREATE TABLE Members (
+    MemberID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    JoinDate DATE
+);
+
+-- Create Loans table
+CREATE TABLE Loans (
+    LoanID INT PRIMARY KEY,
+    ISBN VARCHAR(13),
+    MemberID INT,
+    LoanDate DATE,
+    ReturnDate DATE,
+    FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+
+-- Insert authors into Authors table
+INSERT INTO Authors (AuthorID, FirstName, LastName)
+VALUES 
+    (1, 'J.K.', 'Rowling'),
+    (2, 'George', 'Orwell');
+
+-- Insert books into Books table
+INSERT INTO Books (ISBN, Title, AuthorID, Genre, IsAvailable, PublicationYear)
+VALUES 
+    ('978-0747532743', 'Harry Potter and the Philosopher''s Stone', 1, 'Fantasy', TRUE, 1997),
+    ('978-0451524935', '1984', 2, 'Dystopian', TRUE, 1949);
+
+-- Insert members into Members table
+INSERT INTO Members (MemberID, FirstName, LastName, JoinDate)
+VALUES 
+    (101, 'John', 'Doe', '2022-01-15'),
+    (102, 'Jane', 'Smith', '2023-03-10');
+
+-- Insert loan records into Loans table
+INSERT INTO Loans (LoanID, ISBN, MemberID, LoanDate, ReturnDate)
+VALUES 
+    (1, '978-0747532743', 101, '2023-07-01', NULL), 
+    (2, '978-0451524935', 102, '2023-08-15', NULL);
+
+-- Query to select all books by a specific author (J.K. Rowling)
+SELECT B.ISBN, B.Title, A.FirstName, A.LastName
+FROM Books B
+JOIN Authors A ON B.AuthorID = A.AuthorID
+WHERE A.FirstName = 'J.K.' AND A.LastName = 'Rowling';
+
+-- Update the availability status of a book when it is loaned out (Harry Potter)
+UPDATE Books
+SET IsAvailable = FALSE
+WHERE ISBN = '978-0747532743';
+
+-- Delete members who have not borrowed a book in the last year
+DELETE FROM Members
+WHERE MemberID NOT IN (
+    SELECT MemberID
+    FROM Loans
+    WHERE LoanDate > DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+);
+
+-- Filter books based on genre (Fantasy) and availability (True)
+SELECT * FROM Books
+WHERE Genre = 'Fantasy' AND IsAvailable = TRUE;
+
+-- Use AND to find books by genre (Fantasy) and publication year (before 2000)
+SELECT * FROM Books
+WHERE Genre = 'Fantasy' AND PublicationYear < 2000;
+
+-- Use OR to find books by genre (Fantasy) or published in the year 1997
+SELECT * FROM Books
+WHERE Genre = 'Fantasy' OR PublicationYear = 1997;
+
+-- Sort books by title in ascending order
+SELECT * FROM Books
+ORDER BY Title ASC;
+
+-- Sort books by author's LastName and FirstName in ascending order
+SELECT B.ISBN, B.Title, A.FirstName, A.LastName
+FROM Books B
+JOIN Authors A ON B.AuthorID = A.AuthorID
+ORDER BY A.LastName ASC, A.FirstName ASC;
+
+-- Count the total number of books in the library
+SELECT COUNT(*) AS TotalBooks FROM Books;
+
+-- Group books by genre and count how many books are available in each genre
+SELECT Genre, COUNT(*) AS AvailableBooks
+FROM Books
+WHERE IsAvailable = TRUE
+GROUP BY Genre;
+
+-- Select all books in the library
+SELECT * FROM Books;
+
+-- Select all members in the library
+SELECT * FROM Members;
+
+-- Select all loan records
+SELECT * FROM Loans;
+
+-- Update the availability of a book (1984) to false when loaned out
+UPDATE Books
+SET IsAvailable = FALSE
+WHERE ISBN = '978-0451524935';
+
+-- Delete loans older than one year
+DELETE FROM Loans
+WHERE LoanDate < DATE_SUB(CURDATE(), INTERVAL 1 YEAR);
