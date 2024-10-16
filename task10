@@ -1,0 +1,9 @@
+-- Count the number of employees in each Department
+SELECT Department, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY Department;
+
+-- Calculate the total Amount of orders for each CustomerID
+SELECT CustomerID, SUM(Amount) AS TotalAmount
+FROM Orders
+GROUP BY CustomerID;
